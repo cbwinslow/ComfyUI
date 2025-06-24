@@ -1,0 +1,4 @@
+# Helpful links for ComfyUI
+https://github.com/comfyanonymous/ComfyUI
+https://github.com/comfyanonymous/ComfyUI/wiki
+https://www.youtube.com/results?search_query=comfyui+tutorial
