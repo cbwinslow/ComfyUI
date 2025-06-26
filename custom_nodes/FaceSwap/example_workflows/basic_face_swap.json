@@ -1,0 +1,11 @@
+{
+  "last_node_id": 4,
+  "last_link_id": 3,
+  "nodes": [
+    {"id": 1, "type": "Load Image", "pos": [0, 0], "inputs": {"filename": "source.jpg"}},
+    {"id": 2, "type": "Load Image", "pos": [0, 150], "inputs": {"filename": "target.jpg"}},
+    {"id": 3, "type": "FaceSwap", "pos": [250, 75], "inputs": {"source_image": [1, 0], "target_image": [2, 0]}},
+    {"id": 4, "type": "Save Image", "pos": [500, 75], "inputs": {"images": [3, 0], "filename_prefix": "swapped"}}
+  ],
+  "links": [[1, 0, 3, 0], [2, 0, 3, 1], [3, 0, 4, 0]]
+}
