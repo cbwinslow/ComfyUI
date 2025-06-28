@@ -1,0 +1,7 @@
+from .civitai_nodes import NODE_CLASS_MAPPINGS as CIVITAI_NODES
+from .face_grouping import NODE_CLASS_MAPPINGS as FACE_GROUP_NODES
+from .face_swap_video import NODE_CLASS_MAPPINGS as FACE_SWAP_VIDEO_NODES
+
+NODE_CLASS_MAPPINGS = {}
+for d in (CIVITAI_NODES, FACE_GROUP_NODES, FACE_SWAP_VIDEO_NODES):
+    NODE_CLASS_MAPPINGS.update(d)
