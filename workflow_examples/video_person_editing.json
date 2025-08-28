@@ -1,0 +1,313 @@
+{
+  "last_node_id": 20,
+  "last_link_id": 28,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "LoadVideo",
+      "pos": [50, 50],
+      "size": {"0": 315, "1": 58},
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {"name": "VIDEO", "type": "VIDEO", "links": [1], "shape": 3, "slot_index": 0}
+      ],
+      "properties": {"Node name for S&R": "LoadVideo"},
+      "widgets_values": ["input_video.mp4"]
+    },
+    {
+      "id": 2,
+      "type": "GetVideoComponents",
+      "pos": [400, 50],
+      "size": {"0": 315, "1": 82},
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {"name": "video", "type": "VIDEO", "link": 1}
+      ],
+      "outputs": [
+        {"name": "images", "type": "IMAGE", "links": [2], "shape": 3},
+        {"name": "audio", "type": "AUDIO", "links": [20], "shape": 3},
+        {"name": "fps", "type": "FLOAT", "links": [21], "shape": 3}
+      ],
+      "properties": {"Node name for S&R": "GetVideoComponents"},
+      "widgets_values": []
+    },
+    {
+      "id": 3,
+      "type": "MediaPipeFaceDetection",
+      "pos": [750, 50],
+      "size": {"0": 315, "1": 106},
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {"name": "image", "type": "IMAGE", "link": 2}
+      ],
+      "outputs": [
+        {"name": "face_boxes", "type": "FACE_BOXES", "links": [3], "shape": 3},
+        {"name": "face_keypoints", "type": "FACE_KEYPOINTS", "links": [4], "shape": 3}
+      ],
+      "properties": {"Node name for S&R": "MediaPipeFaceDetection"},
+      "widgets_values": [0.5, 0.5]
+    },
+    {
+      "id": 4,
+      "type": "CreateFaceMask",
+      "pos": [1100, 50],
+      "size": {"0": 315, "1": 126},
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {"name": "image", "type": "IMAGE", "link": 5},
+        {"name": "face_boxes", "type": "FACE_BOXES", "link": 3}
+      ],
+      "outputs": [
+        {"name": "mask", "type": "MASK", "links": [6, 7], "shape": 3}
+      ],
+      "properties": {"Node name for S&R": "CreateFaceMask"},
+      "widgets_values": [20, 0.1]
+    },
+    {
+      "id": 5,
+      "type": "LoadImage",
+      "pos": [50, 200],
+      "size": {"0": 315, "1": 314},
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {"name": "IMAGE", "type": "IMAGE", "links": [8], "shape": 3, "slot_index": 0},
+        {"name": "MASK", "type": "MASK", "links": null, "shape": 3}
+      ],
+      "properties": {"Node name for S&R": "LoadImage"},
+      "widgets_values": ["new_face_reference.jpg"]
+    },
+    {
+      "id": 6,
+      "type": "InpaintingNode",
+      "pos": [1450, 50],
+      "size": {"0": 315, "1": 266},
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {"name": "image", "type": "IMAGE", "link": 9},
+        {"name": "mask", "type": "MASK", "link": 6},
+        {"name": "reference_image", "type": "IMAGE", "link": 8}
+      ],
+      "outputs": [
+        {"name": "IMAGE", "type": "IMAGE", "links": [10], "shape": 3}
+      ],
+      "properties": {"Node name for S&R": "InpaintingNode"},
+      "widgets_values": [
+        "Replace face with reference maintaining lighting and expression",
+        512,
+        512,
+        7.5,
+        20,
+        1.0,
+        "euler",
+        "normal",
+        42
+      ]
+    },
+    {
+      "id": 7,
+      "type": "ClothingModifier",
+      "pos": [750, 400],
+      "size": {"0": 315, "1": 226},
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {"name": "image", "type": "IMAGE", "link": 10},
+        {"name": "person_mask", "type": "MASK", "link": 11}
+      ],
+      "outputs": [
+        {"name": "IMAGE", "type": "IMAGE", "links": [12], "shape": 3}
+      ],
+      "properties": {"Node name for S&R": "ClothingModifier"},
+      "widgets_values": [
+        "Change clothing to elegant business suit",
+        "modern office attire, professional, high quality",
+        "casual clothes, wrinkled, low quality",
+        512,
+        20,
+        7.5,
+        1.0
+      ]
+    },
+    {
+      "id": 8,
+      "type": "PersonSegmentation",
+      "pos": [400, 400],
+      "size": {"0": 315, "1": 106},
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {"name": "image", "type": "IMAGE", "link": 13}
+      ],
+      "outputs": [
+        {"name": "person_mask", "type": "MASK", "links": [11], "shape": 3}
+      ],
+      "properties": {"Node name for S&R": "PersonSegmentation"},
+      "widgets_values": [0.5]
+    },
+    {
+      "id": 9,
+      "type": "HairColorModifier",
+      "pos": [1100, 400],
+      "size": {"0": 315, "1": 186},
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {"name": "image", "type": "IMAGE", "link": 12},
+        {"name": "face_keypoints", "type": "FACE_KEYPOINTS", "link": 4}
+      ],
+      "outputs": [
+        {"name": "IMAGE", "type": "IMAGE", "links": [14], "shape": 3}
+      ],
+      "properties": {"Node name for S&R": "HairColorModifier"},
+      "widgets_values": [
+        "blonde",
+        0.8,
+        "natural hair color change, realistic lighting",
+        512,
+        15,
+        1.0
+      ]
+    },
+    {
+      "id": 10,
+      "type": "ColorCorrection",
+      "pos": [1450, 400],
+      "size": {"0": 315, "1": 226},
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {"name": "image", "type": "IMAGE", "link": 14}
+      ],
+      "outputs": [
+        {"name": "IMAGE", "type": "IMAGE", "links": [15], "shape": 3}
+      ],
+      "properties": {"Node name for S&R": "ColorCorrection"},
+      "widgets_values": [
+        1.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": 11,
+      "type": "TemporalStabilization",
+      "pos": [1800, 50],
+      "size": {"0": 315, "1": 146},
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {"name": "images", "type": "IMAGE", "link": 15}
+      ],
+      "outputs": [
+        {"name": "IMAGE", "type": "IMAGE", "links": [16], "shape": 3}
+      ],
+      "properties": {"Node name for S&R": "TemporalStabilization"},
+      "widgets_values": [
+        0.3,
+        5,
+        true
+      ]
+    },
+    {
+      "id": 12,
+      "type": "CreateVideo",
+      "pos": [2150, 50],
+      "size": {"0": 315, "1": 106},
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {"name": "images", "type": "IMAGE", "link": 16},
+        {"name": "audio", "type": "AUDIO", "link": 20}
+      ],
+      "outputs": [
+        {"name": "VIDEO", "type": "VIDEO", "links": [17], "shape": 3}
+      ],
+      "properties": {"Node name for S&R": "CreateVideo"},
+      "widgets_values": []
+    },
+    {
+      "id": 13,
+      "type": "SaveVideo",
+      "pos": [2500, 50],
+      "size": {"0": 315, "1": 154},
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {"name": "video", "type": "VIDEO", "link": 17}
+      ],
+      "outputs": [],
+      "properties": {"Node name for S&R": "SaveVideo"},
+      "widgets_values": [
+        "person_modified_video",
+        "auto",
+        "auto"
+      ]
+    }
+  ],
+  "links": [
+    [1, 1, 0, 2, 0, "VIDEO"],
+    [2, 2, 0, 3, 0, "IMAGE"],
+    [3, 3, 0, 4, 1, "FACE_BOXES"],
+    [4, 3, 1, 9, 1, "FACE_KEYPOINTS"],
+    [5, 2, 0, 4, 0, "IMAGE"],
+    [6, 4, 0, 6, 1, "MASK"],
+    [7, 4, 0, 6, 2, "MASK"],
+    [8, 5, 0, 6, 2, "IMAGE"],
+    [9, 2, 0, 6, 0, "IMAGE"],
+    [10, 6, 0, 7, 0, "IMAGE"],
+    [11, 8, 0, 7, 1, "MASK"],
+    [12, 7, 0, 9, 0, "IMAGE"],
+    [13, 2, 0, 8, 0, "IMAGE"],
+    [14, 9, 0, 10, 0, "IMAGE"],
+    [15, 10, 0, 11, 0, "IMAGE"],
+    [16, 11, 0, 12, 0, "IMAGE"],
+    [17, 12, 0, 13, 0, "VIDEO"],
+    [20, 2, 1, 12, 1, "AUDIO"],
+    [21, 2, 2, 12, 2, "FLOAT"]
+  ],
+  "groups": [
+    {
+      "title": "Face Modification",
+      "bounding": [700, 0, 800, 350],
+      "color": "#3f789e"
+    },
+    {
+      "title": "Person Editing",
+      "bounding": [350, 350, 1200, 300],
+      "color": "#a1309b"
+    },
+    {
+      "title": "Video Processing",
+      "bounding": [1750, 0, 800, 250],
+      "color": "#b58b2a"
+    }
+  ],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}

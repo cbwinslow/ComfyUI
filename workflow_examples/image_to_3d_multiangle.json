@@ -1,0 +1,242 @@
+{
+  "last_node_id": 12,
+  "last_link_id": 15,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "LoadImage",
+      "pos": [50, 50],
+      "size": {"0": 315, "1": 314},
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {"name": "IMAGE", "type": "IMAGE", "links": [1], "shape": 3, "slot_index": 0},
+        {"name": "MASK", "type": "MASK", "links": null, "shape": 3}
+      ],
+      "properties": {"Node name for S&R": "LoadImage"},
+      "widgets_values": ["example_image.jpg"]
+    },
+    {
+      "id": 2,
+      "type": "TripoImageToModelNode",
+      "pos": [400, 50],
+      "size": {"0": 315, "1": 398},
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {"name": "image", "type": "IMAGE", "link": 1}
+      ],
+      "outputs": [
+        {"name": "model_file", "type": "STRING", "links": [2, 3, 4, 5], "shape": 3, "slot_index": 0}
+      ],
+      "properties": {"Node name for S&R": "TripoImageToModelNode"},
+      "widgets_values": [
+        "v2.0-20241204",
+        "default",
+        true,
+        true,
+        null,
+        "center",
+        "auto",
+        null,
+        "medium",
+        10000,
+        false
+      ]
+    },
+    {
+      "id": 3,
+      "type": "WanCameraEmbedding",
+      "pos": [750, 50],
+      "size": {"0": 315, "1": 294},
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {"name": "camera_embedding", "type": "WAN_CAMERA_EMBEDDING", "links": [6], "shape": 3},
+        {"name": "width", "type": "INT", "links": null, "shape": 3},
+        {"name": "height", "type": "INT", "links": null, "shape": 3},
+        {"name": "length", "type": "INT", "links": null, "shape": 3}
+      ],
+      "properties": {"Node name for S&R": "WanCameraEmbedding"},
+      "widgets_values": [
+        "Pan Left",
+        832,
+        480,
+        81,
+        1.0,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "id": 4,
+      "type": "WanCameraEmbedding",
+      "pos": [750, 400],
+      "size": {"0": 315, "1": 294},
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {"name": "camera_embedding", "type": "WAN_CAMERA_EMBEDDING", "links": [7], "shape": 3},
+        {"name": "width", "type": "INT", "links": null, "shape": 3},
+        {"name": "height", "type": "INT", "links": null, "shape": 3},
+        {"name": "length", "type": "INT", "links": null, "shape": 3}
+      ],
+      "properties": {"Node name for S&R": "WanCameraEmbedding"},
+      "widgets_values": [
+        "Pan Right",
+        832,
+        480,
+        81,
+        1.0,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "id": 5,
+      "type": "WanCameraEmbedding",
+      "pos": [750, 750],
+      "size": {"0": 315, "1": 294},
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {"name": "camera_embedding", "type": "WAN_CAMERA_EMBEDDING", "links": [8], "shape": 3},
+        {"name": "width", "type": "INT", "links": null, "shape": 3},
+        {"name": "height", "type": "INT", "links": null, "shape": 3},
+        {"name": "length", "type": "INT", "links": null, "shape": 3}
+      ],
+      "properties": {"Node name for S&R": "WanCameraEmbedding"},
+      "widgets_values": [
+        "ClockWise (CW)",
+        832,
+        480,
+        81,
+        1.0,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "id": 6,
+      "type": "WanCameraEmbedding",
+      "pos": [750, 1100],
+      "size": {"0": 315, "1": 294},
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {"name": "camera_embedding", "type": "WAN_CAMERA_EMBEDDING", "links": [9], "shape": 3},
+        {"name": "width", "type": "INT", "links": null, "shape": 3},
+        {"name": "height", "type": "INT", "links": null, "shape": 3},
+        {"name": "length", "type": "INT", "links": null, "shape": 3}
+      ],
+      "properties": {"Node name for S&R": "WanCameraEmbedding"},
+      "widgets_values": [
+        "Zoom In",
+        832,
+        480,
+        81,
+        1.0,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "id": 7,
+      "type": "Preview3D",
+      "pos": [1100, 50],
+      "size": {"0": 315, "1": 126},
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {"name": "model_file", "type": "STRING", "link": 2},
+        {"name": "camera_info", "type": "LOAD3D_CAMERA", "link": 6}
+      ],
+      "outputs": [],
+      "properties": {"Node name for S&R": "Preview3D"},
+      "widgets_values": [""]
+    },
+    {
+      "id": 8,
+      "type": "Preview3D",
+      "pos": [1100, 200],
+      "size": {"0": 315, "1": 126},
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {"name": "model_file", "type": "STRING", "link": 3},
+        {"name": "camera_info", "type": "LOAD3D_CAMERA", "link": 7}
+      ],
+      "outputs": [],
+      "properties": {"Node name for S&R": "Preview3D"},
+      "widgets_values": [""]
+    },
+    {
+      "id": 9,
+      "type": "Preview3D",
+      "pos": [1100, 350],
+      "size": {"0": 315, "1": 126},
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {"name": "model_file", "type": "STRING", "link": 4},
+        {"name": "camera_info", "type": "LOAD3D_CAMERA", "link": 8}
+      ],
+      "outputs": [],
+      "properties": {"Node name for S&R": "Preview3D"},
+      "widgets_values": [""]
+    },
+    {
+      "id": 10,
+      "type": "Preview3D",
+      "pos": [1100, 500],
+      "size": {"0": 315, "1": 126},
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {"name": "model_file", "type": "STRING", "link": 5},
+        {"name": "camera_info", "type": "LOAD3D_CAMERA", "link": 9}
+      ],
+      "outputs": [],
+      "properties": {"Node name for S&R": "Preview3D"},
+      "widgets_values": [""]
+    }
+  ],
+  "links": [
+    [1, 1, 0, 2, 0, "IMAGE"],
+    [2, 2, 0, 7, 0, "STRING"],
+    [3, 2, 0, 8, 0, "STRING"],
+    [4, 2, 0, 9, 0, "STRING"],
+    [5, 2, 0, 10, 0, "STRING"],
+    [6, 3, 0, 7, 1, "LOAD3D_CAMERA"],
+    [7, 4, 0, 8, 1, "LOAD3D_CAMERA"],
+    [8, 5, 0, 9, 1, "LOAD3D_CAMERA"],
+    [9, 6, 0, 10, 1, "LOAD3D_CAMERA"]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}
